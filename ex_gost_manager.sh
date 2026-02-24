@@ -5,7 +5,7 @@
 # Version: 2.2.1
 # =====================================================
 
-VERSION="1.0.0"
+VERSION="2.2.1"
 CONFIG_FILE="/etc/gost-manager.conf"
 SERVICE_FILE="/usr/lib/systemd/system/gost.service"
 
