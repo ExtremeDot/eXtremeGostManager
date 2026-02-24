@@ -1,5 +1,6 @@
 # eXtremeGostManager
 Gost Tunnel manager
+نسخه فعلی: 2.2.1
 
 <img width="922" height="725" alt="image" src="https://github.com/user-attachments/assets/f155f2f5-f691-477b-a677-68591ea20758" />
 
@@ -128,7 +129,7 @@ rm /usr/local/bin/extGostManager
 
 دقت کنید باید برای سرور داخل و خارج تمامی این اطلاعات شبیه هم باشند.
 
-.در انتها مشخصات وارد شده در بالای پنل براتون نمایش داده میشه، Server Role مشخص میکنه که سروری که انتخاب کردید سرور ایران iran هست یا خارج foriegn
+.در انتها مشخصات وارد شده در بالای پنل براتون نمایش داده میشه، Server Role مشخص میکنه که سروری که انتخاب کردید سرور ایران iran هست یا خارج foreign
 
 
 <img width="731" height="235" alt="image" src="https://github.com/user-attachments/assets/e64942b5-6684-47ee-bcf5-ca1ca7373ed8" />
