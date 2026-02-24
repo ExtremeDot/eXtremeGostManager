@@ -2,7 +2,7 @@
 
 # =====================================================
 # GOST Tunnel Manager
-# Version: 2.1.0
+# Version: 2.2.1
 # =====================================================
 
 VERSION="1.0.0"
@@ -424,13 +424,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F relay+wss://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+wss://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -448,7 +448,7 @@ echo -e "${ORANGE}Creating WS Direct Tunnel${NC}"
 create_first_gost_servicefile
 if [ "$SERVER_ROLE" == "iran" ]; then
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+ws://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -459,7 +459,7 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L rtcp://:$PORT/:$PORT -F relay+ws://$TUNNEL_USER:$TUNNEL_PASS@$IRAN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
@@ -482,14 +482,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F relay+ws://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
-## KHAREJ
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+ws://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 fi
@@ -506,7 +505,7 @@ echo -e "${ORANGE}Creating relay+tls (Relay over TLS) (Direct) Tunnel${NC}"
 create_first_gost_servicefile
 if [ "$SERVER_ROLE" == "iran" ]; then
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+tls://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -517,7 +516,7 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L rtcp://:$PORT/:$PORT -F relay+tls://$TUNNEL_USER:$TUNNEL_PASS@$IRAN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
@@ -539,13 +538,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F relay+tls://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+tls://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -563,7 +562,7 @@ echo -e "${ORANGE}Creating relay+mtls (Direct) - IRAN / Reverse - Foreign Tunnel
 create_first_gost_servicefile
 if [ "$SERVER_ROLE" == "iran" ]; then
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+mtls://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -574,7 +573,7 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L rtcp://:$PORT/:$PORT -F relay+mtls://$TUNNEL_USER:$TUNNEL_PASS@$IRAN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
@@ -597,13 +596,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F relay+mtls://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+mtls://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -626,13 +625,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F relay+http2://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+http2://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -655,13 +654,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F grpc://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L grpc://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -684,13 +683,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F quic://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L quic://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -713,13 +712,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F kcp+raw://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L kcp+raw://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -737,7 +736,7 @@ echo -e "${ORANGE}Creating relay+mtcp - IRAN / Reverse - Foreign Tunnel${NC}"
 create_first_gost_servicefile
 if [ "$SERVER_ROLE" == "iran" ]; then
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+mtcp://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -748,7 +747,7 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L rtcp://:$PORT/:$PORT -F relay+mtcp://$TUNNEL_USER:$TUNNEL_PASS@$IRAN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
@@ -771,13 +770,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F relay+mtcp://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+mtcp://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -800,13 +799,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F obfs+tls://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L obfs+tls://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -831,13 +830,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F obfs+http://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L obfs+http://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -855,7 +854,7 @@ echo -e "${ORANGE}Creating relay+pht - IRAN / Reverse - Foreign Tunnel${NC}"
 create_first_gost_servicefile
 if [ "$SERVER_ROLE" == "iran" ]; then
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+pht://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
@@ -866,7 +865,7 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L rtcp://:$PORT/:$PORT -F relay+pht://$TUNNEL_USER:$TUNNEL_PASS@$IRAN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
@@ -889,13 +888,13 @@ for PORT in $FORWARD_PORTS; do
 CMD="$CMD -L tcp://:$PORT/:$PORT -F relay+pht://$TUNNEL_USER:$TUNNEL_PASS@$FOREIGN_IP:$GOST_PORT"
 done
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost $CMD
 EOF
 
 else
 
-cat > $SERVICE_FILE <<EOF
+cat >> $SERVICE_FILE <<EOF
 ExecStart=/usr/local/bin/gost -L relay+pht://$TUNNEL_USER:$TUNNEL_PASS@:${GOST_PORT}?bind=true
 EOF
 
