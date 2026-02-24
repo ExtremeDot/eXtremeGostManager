@@ -909,6 +909,7 @@ gost_service_reload
 # -----------------------------------------------------
 manual_edit() {
 nano $SERVICE_FILE
+daemon-reload
 }
 
 # -----------------------------------------------------
@@ -918,14 +919,17 @@ nano $SERVICE_FILE
 
 
 service_start() {
+daemon-reload
 systemctl start gost
 }
+
 
 service_stop() {
 systemctl stop gost
 }
 
 service_restart() {
+daemon-reload
 systemctl restart gost
 }
 
