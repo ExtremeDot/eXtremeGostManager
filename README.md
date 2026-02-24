@@ -67,7 +67,7 @@ Gost Tunnel manager
 ### نصب
 
 ```
-curl -O https://raw.githubusercontent.com/ExtremeDot/eXtremeGostManager/master/ex_gost_manager.sh && chmod +x ex_gost_manager.sh
+curl -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/ExtremeDot/eXtremeGostManager/master/ex_gost_manager.sh?$RANDOM" -o ex_gost_manager.sh && chmod +x ex_gost_manager.sh
 mv ex_gost_manager.sh /usr/local/bin/extGostManager && chmod +x /usr/local/bin/extGostManager
 ```
 ### اجرای منو 
