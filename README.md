@@ -3,10 +3,11 @@
 
 ### معرفی پروژه eXtreme Gost Manager
 
-
 - اسکریپت مدیریت حرفه‌ای تونل GOST برای سناریوی ایران ↔ خارج
 - طراحی شده برای پیاده‌سازی امن، ماژولار و قابل مدیریت تونل TCP بین دو سرور.
 - نسخه فعلی: 2.2.1
+
+  
 
 - <img width="922" height="725" alt="image" src="https://github.com/user-attachments/assets/f155f2f5-f691-477b-a677-68591ea20758" />
 - 
