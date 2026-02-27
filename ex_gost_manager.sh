@@ -2,10 +2,10 @@
 
 # =====================================================
 # GOST Tunnel Manager
-# Version: 2.3.0 .
+# Version: 2.3.1 .
 # =====================================================
 
-VERSION="2.3.0"
+VERSION="2.3.1"
 CONFIG_FILE="/etc/gost-manager.conf"
 SERVICE_FILE="/usr/lib/systemd/system/gost.service"
 
@@ -28,6 +28,7 @@ DEFAULT_IPERF_DURATION="10"
 DEFAULT_IPERF_PARALLEL="4"
 DEFAULT_IPERF_INTERVAL="2"
 DEFAULT_IPERF_PRESET="1G"
+DEFAULT_LAST_TUNNEL_MODE="NONE"
 
 # -----------------------------------------------------
 # Logo
@@ -65,6 +66,7 @@ else
 	IPERF_PARALLEL="$DEFAULT_IPERF_PARALLEL"
 	IPERF_INTERVAL="$DEFAULT_IPERF_INTERVAL"
 	IPERF_PRESET="$DEFAULT_IPERF_PRESET"
+	LAST_TUNNEL_MODE="$DEFAULT_LAST_TUNNEL_MODE"
 fi
 }
 
@@ -85,7 +87,14 @@ IPERF_DURATION="$IPERF_DURATION"
 IPERF_PARALLEL="$IPERF_PARALLEL"
 IPERF_INTERVAL="$IPERF_INTERVAL"
 IPERF_PRESET="$IPERF_PRESET"
+LAST_TUNNEL_MODE="$LAST_TUNNEL_MODE"
 EOF
+}
+
+save_last_tunnel() {
+    mode_name="$1"
+    sed -i "/^LAST_TUNNEL_MODE=/d" "$CONFIG_FILE"
+    echo "LAST_TUNNEL_MODE=\"$mode_name\"" >> "$CONFIG_FILE"
 }
 
 # -----------------------------------------------------
@@ -259,8 +268,9 @@ PUBLIC_IP=$(ip -4 addr show scope global | grep inet | awk '{print $2}' | cut -d
 echo -e "    ${CYAN} - Configuration Info for this Server -------------------------- [  ${GREEN}$PUBLIC_IP ${CYAN} ]${NC} "
 #echo -e "${CYAN}    Configuration Data ----------------------------------------------- ${NC}"
 #show_interfaces
-printf "      - %-15s %-20s\n" \
-"Server Role:" "$SERVER_ROLE"
+printf "      - %-15s %-20s  - %-15s %-20s\n" \
+"Server Role:" "$SERVER_ROLE" \
+"Tunnel mode:" "$LAST_TUNNEL_MODE"
 
 printf "      - %-15s %-20s  - %-15s %-20s\n" \
 "Iran IP:" "$IRAN_IP" \
@@ -1260,14 +1270,14 @@ printf "%-55s %-55s\n" \
 "49) PHT-D  | PHT Protocol - Direct" \
 "50) PHT-R  | PHT Protocol - Reverse"
 
-echo -e "${ORANGE}==== Tunnel Check ===========================================================================${NC}"
+echo -e "${ORANGE}==== Tunnel Check ==============================================================================${NC}"
 printf "%-35s %-35s %-35s\n" \
 "81) Tunnel IP Check" \
 "82) Speed Test Config" \
 "83) Bandwidth Test (iperf3)"
 
 
-echo -e "${ORANGE}==== Tunnel Service Control =====================================================================${NC}"
+echo -e "${ORANGE}==== Tunnel Service Control ====================================================================${NC}"
 
 printf "%-35s %-35s %-35s\n" \
 "91) Start Service" \
@@ -1295,26 +1305,64 @@ case $OPTION in
 2) configure_data ;;
 3) update_package ;;
 
-21) create_wss_direct ;;
-22) create_wss_reverse ;;
-23) create_ws_direct ;;
-24) create_ws_reverse ;;
+21) 
+	save_last_tunnel "21-WSS-D "
+	create_wss_direct
+	;;
+22) 
+	save_last_tunnel "22-WSS-R  "
+	create_wss_reverse ;;
+	
+23) 
+	save_last_tunnel "23-WS-D "
+	create_ws_direct ;;
+24) 
+	save_last_tunnel "24-WS-R  "
+	create_ws_reverse ;;
 
-31) create_tls_direct ;;
-32) create_tls_reverse ;;
-33) create_mtls_direct ;;
-34) create_mtls_reverse ;;
+31) 
+	save_last_tunnel "31- TLS-D "
+	create_tls_direct ;;
+32) 
+	save_last_tunnel "32-TLS-R "
+	create_tls_reverse ;;
+33) 
+	save_last_tunnel "33-mTLS-D "
+	create_mtls_direct ;;
+34) 
+	save_last_tunnel "34-mTLS-R "
+	create_mtls_reverse ;;
 
-41) create_http2_reverse ;;
-42) create_gRPC_reverse ;;
-43) create_quic_reverse ;;
-44) create_kcpraw_reverse ;;
-45) create_mtcp_direct ;;
-46) create_mtcp_reverse ;;
-47) create_obfstls_reverse ;;
-48) create_obfshttp_reverse ;;
-49) create_relaypht_direct ;;
-50) create_relaypht_reverse ;;
+41) 
+	save_last_tunnel "41-H2-R "
+	create_http2_reverse ;;
+42) 
+	save_last_tunnel "42-gRPC-R "
+	create_gRPC_reverse ;;
+43) 
+	save_last_tunnel "43-QUIC-R "
+	create_quic_reverse ;;
+44) 
+	save_last_tunnel "44-KCP-RAW "
+	create_kcpraw_reverse ;;
+45) 
+	save_last_tunnel "45-MTCP-D "
+	create_mtcp_direct ;;
+46) 
+	save_last_tunnel "46- MTCP-R "
+	create_mtcp_reverse ;;
+47) 
+	save_last_tunnel "47-OBFS-T "
+	create_obfstls_reverse ;;
+48) 
+	save_last_tunnel "48-OBFS-H"
+	create_obfshttp_reverse ;;
+49) 
+	save_last_tunnel "49-PHT-D "
+	create_relaypht_direct ;;
+50) 
+	save_last_tunnel "50-PHT-R "
+	create_relaypht_reverse ;;
 
 81) check_tunnel_ip ;;
 82) configure_speed_test ;;
